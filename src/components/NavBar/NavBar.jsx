@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import "./NavBar.css";
+import { useContext, useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { IconContext } from "react-icons/lib";
-import { NavLink } from "react-router-dom";
-import logo from '../../assets/logo.png'
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import logo from "../../assets/logo.png";
+import { AuthContext } from "../../provider/AuthProvider";
+import "./NavBar.css";
 
 function NavBar() {
   const [click, setClick] = useState(false);
@@ -12,6 +12,12 @@ function NavBar() {
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
 
+  const { logOut, user } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const handleLogOut = () => {
+    logOut();
+    navigate("/");
+  };
   return (
     <>
       <IconContext.Provider value={{ color: "#fff" }}>
@@ -19,7 +25,9 @@ function NavBar() {
           <div className="navbar-container container">
             <Link to="/" className="navbar-logo flex" onClick={closeMobileMenu}>
               <img className="w-[70px]" src={logo} alt="" />
-              <span className="text-blue-800 text-3xl font-bold">Care <span className="text-green-600">Connect</span> </span>
+              <span className="text-blue-800 text-3xl font-bold">
+                Care <span className="text-green-600">Connect</span>{" "}
+              </span>
             </Link>
             <div className="menu-icon " onClick={handleClick}>
               {click ? <FaTimes /> : <FaBars />}
@@ -58,18 +66,20 @@ function NavBar() {
                   SERVICES
                 </NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink
-                  to="/dashboard"
-                  className={({ isActive }) =>
-                    "nav-links" + (isActive ? " activated" : "")
-                  }
-                  onClick={closeMobileMenu}
-                >
-                  DASHBOARD
-                </NavLink>
-              </li>
-              <li className="nav-item">
+              {user && (
+                <li className="nav-item">
+                  <NavLink
+                    to="/dashboard"
+                    className={({ isActive }) =>
+                      "nav-links" + (isActive ? " activated" : "")
+                    }
+                    onClick={closeMobileMenu}
+                  >
+                    DASHBOARD
+                  </NavLink>
+                </li>
+              )}
+              {/* <li className="nav-item">
                 <NavLink
                   to="/contact"
                   className={({ isActive }) =>
@@ -79,7 +89,30 @@ function NavBar() {
                 >
                   CONTACT
                 </NavLink>
-              </li>
+              </li> */}
+              <span className="nav-item flex items-center gap-2">
+                {user && (
+                  <img
+                    src={user?.photoURL}
+                    className="w-8 h-8 rounded-full"
+                    alt=""
+                  />
+                )}
+                {user ? (
+                  <button
+                    onClick={handleLogOut}
+                    className="py-1 px-2 mx-1 rounded hover:bg-blue-800 font-semibold md:my-0 text-black border hover:text-white"
+                  >
+                    Logout
+                  </button>
+                ) : (
+                  <Link to="/signin">
+                    <button className="py-1 px-2 mx-1 rounded hover:bg-blue-800 font-semibold md:my-0 text-black border hover:text-white">
+                      Log in
+                    </button>
+                  </Link>
+                )}
+              </span>
             </ul>
           </div>
         </nav>
