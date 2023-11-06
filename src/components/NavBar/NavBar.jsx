@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./NavBar.css";
-import { GiRocketThruster } from "react-icons/gi";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { IconContext } from "react-icons/lib";
 import { NavLink } from "react-router-dom";
+import logo from '../../assets/logo.png'
 
 function NavBar() {
   const [click, setClick] = useState(false);
@@ -17,15 +17,15 @@ function NavBar() {
       <IconContext.Provider value={{ color: "#fff" }}>
         <nav className="navbar">
           <div className="navbar-container container">
-            <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
-              <GiRocketThruster className="navbar-icon" />
-              Skye
+            <Link to="/" className="navbar-logo flex" onClick={closeMobileMenu}>
+              <img className="w-[70px]" src={logo} alt="" />
+              <span className="text-blue-800 text-3xl font-bold">Care <span className="text-green-600">Connect</span> </span>
             </Link>
-            <div className="menu-icon" onClick={handleClick}>
+            <div className="menu-icon " onClick={handleClick}>
               {click ? <FaTimes /> : <FaBars />}
             </div>
             <ul className={click ? "nav-menu active" : "nav-menu"}>
-              <li className="nav-item">
+              <li className="nav-item ">
                 <NavLink
                   to="/"
                   className={({ isActive }) =>
@@ -33,7 +33,7 @@ function NavBar() {
                   }
                   onClick={closeMobileMenu}
                 >
-                  Home
+                  HOME
                 </NavLink>
               </li>
               <li className="nav-item">
@@ -44,7 +44,29 @@ function NavBar() {
                   }
                   onClick={closeMobileMenu}
                 >
-                  About
+                  ABOUT
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink
+                  to="/services"
+                  className={({ isActive }) =>
+                    "nav-links" + (isActive ? " activated" : "")
+                  }
+                  onClick={closeMobileMenu}
+                >
+                  SERVICES
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink
+                  to="/dashboard"
+                  className={({ isActive }) =>
+                    "nav-links" + (isActive ? " activated" : "")
+                  }
+                  onClick={closeMobileMenu}
+                >
+                  DASHBOARD
                 </NavLink>
               </li>
               <li className="nav-item">
@@ -55,7 +77,7 @@ function NavBar() {
                   }
                   onClick={closeMobileMenu}
                 >
-                  Contact
+                  CONTACT
                 </NavLink>
               </li>
             </ul>
