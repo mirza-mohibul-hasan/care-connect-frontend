@@ -1,7 +1,11 @@
+import Nearby from "./HomeComponents/Nearby";
+
 const Home = () => {
   return (
-    <div>Home</div>
-  )
-}
+    <>
+      <Nearby></Nearby>
+    </>
+  );
+};
 
-export default Home
+export default Home;
