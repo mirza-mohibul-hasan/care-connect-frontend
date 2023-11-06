@@ -28,7 +28,7 @@ const Footer = () => {
         <aside className="items-center grid-flow-col">
           <img className="w-24" src={logo} alt="" />
           <p>
-            Care Connect <br />
+            <span className="text-2xl font-bold">Care Connect</span> <br />
             Providing reliable MEdical Service
           </p>
         </aside>
